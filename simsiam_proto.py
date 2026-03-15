@@ -170,19 +170,33 @@ class RegressionHead(nn.Module):
         return out
 
 
-#Removing imperfect labels for regression
-clean_X = []
-clean_y = []
+# -------------------------
+# Regression: only clean rows (no NaNs in labels)
+# -------------------------
+reg_X_train, reg_y_train = [], []
+for xi, yi in zip(X_train, y_train):
+    if not np.isnan(yi).any():
+        reg_X_train.append(xi)
+        reg_y_train.append(yi)
 
-for x_i, y_i in zip(X_train, y_train):
-    if not np.isnan(y_i).any():
-        clean_X.append(x_i)
-        clean_y.append(y_i)
+reg_X_test, reg_y_test = [], []
+for xi, yi in zip(X_test, y_test):
+    if not np.isnan(yi).any():
+        reg_X_test.append(xi)
+        reg_y_test.append(yi)
 
-X_train = clean_X
-y_train = clean_y
+print(f"Regression train samples: {len(reg_X_train)}")
+print(f"Regression test samples: {len(reg_X_test)}")
 
-print(f"After removing NaN labels, {len(X_train)} training samples remain.")
+# -------------------------
+# Normalize per appliance
+# -------------------------
+y_train_arr = np.array(reg_y_train)
+y_max = y_train_arr.max(axis=0)
+y_max[y_max == 0] = 1.0  # prevent divide-by-zero
+y_train_norm = y_train_arr / y_max
+y_test_norm = np.array(reg_y_test) / y_max
+
 # -------------------------
 # Train regression
 # -------------------------
@@ -192,12 +206,7 @@ optimizer_reg = optim.Adam(reg_model.parameters(), lr=1e-3)
 loss_fn = nn.MSELoss()
 
 
-for X,y in zip(X_train, y_train):
-    if np.isnan(y).any():
-        X_train.remove(X)
-        y_train.remove(y)
-
-dataset_reg = STFTDataset(X_train, y_train)
+dataset_reg = STFTDataset(reg_X_train, y_train_norm)
 dataloader_reg = DataLoader(dataset_reg, batch_size=16, shuffle=True)
 num_epochs_reg = 10
 
@@ -214,6 +223,7 @@ for epoch in range(num_epochs_reg):
         optimizer_reg.step()
         total_loss += loss.item()
     print(f"Regression Epoch {epoch+1}, Loss: {total_loss/len(dataloader_reg):.4f}")
+
 
 # -------------------------
 # Evaluate on test set
