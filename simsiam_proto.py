@@ -16,18 +16,18 @@ appliances = ["aggregate","kettle", "toaster", "microwave", "dishwasher", "fridg
 
 house1 = [1, 10, 11, 13, 6, 12, 5]
 
-downloader.download_flac_files(house=1, week=38, year=2013, hours=24, download_dir="~/thesis")
+downloader.download_flac_files(house=1, week=38, year=2013, hours=24, download_dir="~/project")
 
-preprocess.stitch_resample_6s(1, house1, "~/thesis/house_1/dat_files/", "~/thesis/house_1/")
+preprocess.stitch_resample_6s(1, house1, "~/project/house_1/dat_files/", "~/project/house_1/")
 
 
 ##PIPELINE TESTING LABEL SETUP
 
 
-preprocess.chop_flac(flac_folder="~/thesis/house_1/flac_files/2013/wk38/", cfg_file="~/Downloads/calibration_house_1.cfg", output_base="~/thesis/house_1/stft_segments/2013/wk38/", sample_rate=16000)
+preprocess.chop_flac(flac_folder="~/project/house_1/flac_files/2013/wk38/", cfg_file="~/Downloads/calibration_house_1.cfg", output_base="~/project/house_1/stft_segments/2013/wk38/", sample_rate=16000)
 
 
-X,y =preprocess.mash_that("~/thesis/house_1/house1_stitched.csv", "~/thesis/house_1/stft_segments/2013/wk38/")
+X,y =preprocess.mash_that("~/project/house_1/house1_stitched.csv", "~/project/house_1/stft_segments/2013/wk38/")
 print(f"X shape: {len(X)}, y shape: {len(y)}")
 print(f"Example X[0] shape: {X[0].shape}, y[0]: {y[0]}")
 #removing imputation logic for now - need more clarity, using non NAn label rows for final regression training.
