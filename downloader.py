@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def download_flac_files(house, week, year, hours=1, download_dir="~/thesis"):
+def download_flac_files(house, week, year, hours=1, download_dir="~/project"):
     """
     Downloads the first `hours` FLAC files for a given house, week, and year.
     Each file is ~1 hour long.
@@ -83,7 +83,7 @@ def download_flac_files(house, week, year, hours=1, download_dir="~/thesis"):
 
 
 
-def download_dat_files(house, channels, download_dir="~/thesis"):
+def download_dat_files(house, channels, download_dir="~/project"):
     """
     Downloads mains.dat + appliance .dat files for a given house.
     Skips files that already exist in the download directory.
