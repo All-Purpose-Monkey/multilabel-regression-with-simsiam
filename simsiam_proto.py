@@ -127,7 +127,7 @@ device = torch.device("cpu")
 # Pretraining: SimSiam SSL
 # -------------------------
 model = SimSiam(flatten_size).to(device)
-optimizer = optim.Adam(model.parameters(), lr=1e-3)
+optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
 dataset_ssl = STFTDataset(X_train)  # only train STFTs
 dataloader_ssl = DataLoader(dataset_ssl, batch_size=16, shuffle=True)
@@ -202,7 +202,7 @@ y_test_norm = np.array(reg_y_test) / y_max
 # -------------------------
 
 reg_model = RegressionHead(model.backbone, flatten_size, output_dim=7).to(device)
-optimizer_reg = optim.Adam(reg_model.parameters(), lr=1e-3)
+optimizer_reg = optim.Adam(reg_model.parameters(), lr=1e-4)
 loss_fn = nn.MSELoss()
 
 
@@ -229,7 +229,7 @@ for epoch in range(num_epochs_reg):
 # Evaluate on test set
 # -------------------------
 reg_model.eval()
-test_dataset = STFTDataset(X_test, y_test)
+test_dataset = STFTDataset(reg_X_train, reg_y_test)
 test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
 
 test_loss = 0
@@ -287,8 +287,8 @@ print("\nShowing 3 prediction examples...\n")
 
 for i in range(3):
 
-    stft = X_test[i]
-    true_label = y_test[i]
+    stft = reg_X_train[i]
+    true_label = y_test_norm[i]
 
     stft_tensor = torch.tensor(stft, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
 
