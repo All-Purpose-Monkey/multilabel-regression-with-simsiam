@@ -278,7 +278,7 @@ def mash_that(stitched_csv_path, stft_base):
 
     return X, y
 
-def label_segmentor(csv_path="~/thesis/house_1/house1_stitched.csv", output_folder="~/thesis", target_date=(2013, 9, 16), end_date=None):
+def label_segmentor(csv_path="~/project/house_1/house1_stitched.csv", output_folder="~/project", target_date=(2013, 9, 16), end_date=None):
     """
     Extract rows from a stitched UK-DALE label CSV for a specific date
     or a range of dates and save them to a new CSV.
