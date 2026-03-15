@@ -40,5 +40,13 @@ In terms of processes, this pipeline does the following to achieve the same:
    
    3.3 15 epoch training regime followed with a MSE, MAE, RMSE, and R2 eval of the results by appliances and some plots to visualise the results.
 
+# How to use:
+
+You only need to run the simsiam_proto.py file, it has all the commands and function calls to make the pipeline run. Apart from that the functions are designed to be dynamic enough to handle increases or decreases to training data size with the help of easy to understand parameters (or so I hope) and comes with .yml file with the appropriate packages. Please run:
+
+'conda activate ukdale_nilm'
+
+on your terminal pefore running the pipeline.
+
 # About Me
 Hello! Born and raised in India, I am currently pursuing a masters in Data Science at Tilburg University, The Netherlands. I got interested in the field a few years back when I was working as marketing analyst for a fitness AI app startup which used computervision and transformers to give real-time feedback for home workouts. Since then I started learning to code, worked in more AI centered firms and now we are here :) My interests in data science (and the specialisation of my masters) is in deep learning for image, sound and sensor input data. Apart from that, I love to garden, cross-country biking and playing Dota 2. 
