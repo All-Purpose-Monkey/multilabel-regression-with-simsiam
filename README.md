@@ -16,7 +16,7 @@ In terms of processes, this pipeline does the following to achieve the same:
 ## 1. Dataset Creation (functions defined in downloader.py and preprocess.py):
   1.1. Downloading 24hrs total of .flac files - stored to disk (4 GBs approx)
   
-  1.2. Converting the 16kHz data to 6s long stft segments (using librosa and hann window) - 24*600 .npy files stored on disk
+  1.2. Converting the 16kHz data to 6s long stft segments (using librosa and hann window) - 24*600 .npy files stored on disk (11 gbs)
   
   1.3. Downloading main + appliance reading data
   
